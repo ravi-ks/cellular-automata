@@ -8,7 +8,7 @@ export class GodService {
   cellsAliveInNextGen: Set<String> = new Set<String>();
 
   rows = Math.floor(window.screen.height / 32) - 4;
-  cols = 50;
+  cols = Math.floor(window.screen.width / 32) + 10;
   directions: number[][] = [];
 
   setCellsStatus(cellsSetALive: Set<String>): void{
