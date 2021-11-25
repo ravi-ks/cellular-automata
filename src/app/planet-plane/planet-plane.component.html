@@ -11,11 +11,13 @@
     </button>
     <button (click) = "enableDisableBorder()">Enable/Disable Border</button>
   </div>
-  <table class="table">
-      <tbody>
-        <tr *ngFor="let row of counter(rows); index as i">
-          <td [ngStyle]="{'border': borderDisabled ? 'none' : '2px solid black'}" [ngClass] = "isAlive(i, j) ? liveCellColor : deadCellColor" *ngFor="let col of counter(cols); index as j" (click) = "toggleCellStatus(i, j)">{{" "}}</td>
-        </tr>
-      </tbody>
+  <section>
+    <table class="table">
+        <tbody>
+          <tr *ngFor="let row of counter(rows); index as i">
+            <td [ngStyle]="{'border': borderDisabled ? 'none' : '2px solid black'}" [ngClass] = "isAlive(i, j) ? liveCellColor : deadCellColor" *ngFor="let col of counter(cols); index as j" (click) = "toggleCellStatus(i, j)">{{" "}}</td>
+          </tr>
+        </tbody>
     </table>
+  </section>
 </div>
