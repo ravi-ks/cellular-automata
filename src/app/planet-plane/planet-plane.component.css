@@ -1,0 +1,51 @@
+ table, td{
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+}
+table{
+  margin-top: 0.1em;
+}
+
+td{
+  width: 2em;
+  height: 2em;
+}
+
+.red{
+  background-color: red;
+}
+
+.green{
+  background-color: green;
+}
+
+.black{
+  background-color: black;
+}
+
+.white{
+  background-color: white;
+}
+
+button{
+  height: 2em;
+  background-color: black;
+  color: white;
+}
+
+
+
+.buttonAtTheEnd{
+  float: right;
+}
+
+.title{
+  margin-top: 0%;
+  width: 100%;
+  background-color: black;
+  height: auto;
+  font-size: x-large;
+  color: aliceblue;
+}
+

@@ -1,0 +1,21 @@
+<div>
+  <a href = 'https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life' target="_blank" rel="noopener noreferrer">
+    <button class="title">Conway's Game Of Life</button>
+  </a>
+  <div class="outerDiv">
+    <button>Generations: {{noOfGenerations}}</button>
+    <button>Population: {{population}}</button>
+    <button class="buttonAtTheEnd" (click)="(startSimulation())" type="button">{{startOrStopSimulation}}</button>
+    <button class="buttonAtTheEnd"> Maturity Time in millisec:
+      <input type="number" step="100" onKeyDown="return false" min="100" max="2000" [(ngModel)]="maturitySpeed"/>
+    </button>
+    <button (click) = "enableDisableBorder()">Enable/Disable Border</button>
+  </div>
+  <table class="table">
+      <tbody>
+        <tr *ngFor="let row of counter(rows); index as i">
+          <td [ngStyle]="{'border': borderDisabled ? 'none' : '2px solid black'}" [ngClass] = "isAlive(i, j) ? liveCellColor : deadCellColor" *ngFor="let col of counter(cols); index as j" (click) = "toggleCellStatus(i, j)">{{" "}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
