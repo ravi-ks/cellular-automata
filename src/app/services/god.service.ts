@@ -7,7 +7,7 @@ export class GodService {
   cellsAlive: Set<String> = new Set<String>();
   cellsAliveInNextGen: Set<String> = new Set<String>();
 
-  rows = Math.floor(window.screen.height / 32) - 4;
+  rows = Math.floor(window.screen.height / 32) - 6;
   cols = Math.floor(window.screen.width / 32) + 10;
   directions: number[][] = [];
 

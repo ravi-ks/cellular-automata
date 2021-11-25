@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PlanetPlaneComponent implements OnInit {
   //rows = 18;
   cols = Math.floor(window.screen.width / 32) + 10;
-  rows = Math.floor(window.screen.height / 32) - 4;
+  rows = Math.floor(window.screen.height / 32) - 6;
 
 
   godService: GodService;
