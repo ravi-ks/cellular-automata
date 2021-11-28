@@ -4,7 +4,7 @@
 }
 
 table{
-  margin-top: 0.1em;
+  margin-top: 1em;
 }
 
 td{
@@ -28,11 +28,18 @@ td{
   background-color: white;
 }
 
-button{
+button, select{
   height: 2em;
   background-color: black;
   color: white;
 }
+
+.button{
+  width: 12em;
+}
+
+
+
 
 
 

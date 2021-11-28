@@ -5,11 +5,18 @@
   <div class="outerDiv">
     <button>Generations: {{noOfGenerations}}</button>
     <button>Population: {{population}}</button>
-    <button class="buttonAtTheEnd" (click)="(startSimulation())" type="button">{{startOrStopSimulation}}</button>
+    <button class="buttonAtTheEnd" (click)="(startSimulation())" (click)="startSimulationClickedByUser = true" type="button">{{startOrStopSimulation}}</button>
     <button class="buttonAtTheEnd"> Maturity Time in millisec:
       <input type="number" step="100" onKeyDown="return false" min="100" max="2000" [(ngModel)]="maturitySpeed"/>
     </button>
     <button (click) = "enableDisableBorder()">Enable/Disable Border</button>
+    <mat-select  [disabled]=isSimulationInProgress() style="width: 10em; height: 2em;" [(value)] = "inbuiltPattern" (valueChange)="initPopulationState()">
+      <mat-option class="button" value="None">Try a inbuilt pattern</mat-option>
+      <mat-option class="button" value="Blinker">Blinker</mat-option>
+      <mat-option class="button" value="Glider">Glider</mat-option>
+      <mat-option class="button" value="Pulsar">Pulsar</mat-option>
+      <mat-option class="button" value="Penta">Penta-decathlon</mat-option>
+    </mat-select>
   </div>
   <section>
     <table class="table">

@@ -25,9 +25,22 @@ export class PlanetPlaneComponent implements OnInit {
   _snackBar: MatSnackBar;
   @Input() maturitySpeed: number = 300;
 
+  inbuiltPattern = "None";
+  blinkerPattern: Set<String> = new Set<String>();
+  gliderPattern: Set<String> = new Set<String>();
+  pulsarPattern: Set<String> = new Set<String>();
+  pentaPattern: Set<String> = new Set<String>();
+
+  startSimulationClickedByUser = false;
+
   constructor(godService: GodService, _snackBar: MatSnackBar) {
     this._snackBar = _snackBar;
     this.godService = godService;
+
+    this.initAllInbuiltPatterns();
+
+
+
 
     /*this.cellsAlive.add(0 + "," + 0);
     this.cellsAlive.add(0 + "," + 1);
@@ -44,6 +57,76 @@ export class PlanetPlaneComponent implements OnInit {
 
     //godService.setCellsStatus(this.cellsAlive);
   }
+  initAllInbuiltPatterns(){
+    this.blinkerPattern.add("3,3");
+    this.blinkerPattern.add("4,3");
+    this.blinkerPattern.add("5,3");
+
+    this.gliderPattern.add("3,3");
+    this.gliderPattern.add("4,4");
+    this.gliderPattern.add("5,4");
+    this.gliderPattern.add("5,3");
+    this.gliderPattern.add("5,2");
+
+    let pulsarstr: String[]= [
+    "1,5",
+      "1,6",
+      "1,7",
+      "3,8",
+      "4,8",
+      "5,8",
+      "6,7",
+      "6,6",
+      "6,5",
+      "5,3",
+      "4,3",
+      "3,3",
+      "3,10",
+      "4,10",
+      "5,10",
+      "6,11",
+      "6,12",
+      "6,13",
+      "5,15",
+      "4,15",
+      "3,15",
+      "1,11",
+      "1,12",
+      "1,13",
+      "8,6",
+         "8,5",
+         "8,7",
+         "9,8",
+         "10,8",
+         "11,8",
+         "13,7",
+         "13,6",
+         "13,5",
+         "9,3",
+         "10,3",
+         "11,3",
+         "9,10",
+         "10,10",
+         "11,10",
+         "8,11",
+         "8,12",,
+         "8,13",
+         "9,15",
+         "10,15",
+         "11,15",
+    ,"13,13","13,12","13,11"] as String[];
+
+    for(let str in pulsarstr){
+      this.pulsarPattern.add(pulsarstr[str]);
+    }
+
+    let pentaStr: String[] = ["3,4", "4,4", "5,3", "5,5", "6,4", "7,4", "8,4", "9,4", "11,4", "12,4", "10,3", "10,5"];
+
+    for(let str in pentaStr){
+      this.pentaPattern.add(pentaStr[str]);
+    }
+  }
+
 
   ngOnInit(): void {
   }
@@ -57,9 +140,15 @@ export class PlanetPlaneComponent implements OnInit {
     return new Array(len);
   }
 
+  isSimulationInProgress(): boolean{
+    if(this.startOrStopSimulation === "Start Simulation") return false;
+    return true;
+  }
 
   startSimulation(){
-    if(this.startOrStopSimulation === "Start Simulation"){
+    if(this.population == 0 && this.startOrStopSimulation === "Start Simulation")
+      this._snackBar.open("Population is zero, evolution is futile", "Got it");
+    else if(this.startOrStopSimulation === "Start Simulation"){
       this.startOrStopSimulation = "Stop Simulation";
       this.computeNextGen();
     }
@@ -70,14 +159,22 @@ export class PlanetPlaneComponent implements OnInit {
       this.liveCellColor = "red";
       this.deadCellColor = "green";
       this.borderDisabled = false;
-
       this.godService.cellsAlive.clear();
+      this.inbuiltPattern = "None";
       return;
     }
   }
   async computeNextGen(): Promise<void>{
     this.population = this.godService.cellsAlive.size;
-    if(!this.stopSimulationFlag){
+    if(this.population == 0 && this.startOrStopSimulation
+      !== "Start Simulation"){
+      this._snackBar.open("Judgment Day has come, extinction attained.", "Ok");
+      this.noOfGenerations = 0;
+      this.startSimulation();
+      this.stopSimulationFlag = false;
+      return;
+    }
+    else if(!this.stopSimulationFlag){
       this.toggleCellStatusEnabled = false;
       this.godService.computeNextGen();
       await this.delay(this.maturitySpeed);
@@ -121,6 +218,35 @@ export class PlanetPlaneComponent implements OnInit {
     }
     else
       this._snackBar.open("Border can be toogled only after the simulation has started", "OK");
+  }
+
+  initPopulationState(){
+    if(this.inbuiltPattern == "Blinker"){
+      this.godService.cellsAlive.clear();
+      this.godService.setCellsStatus(this.blinkerPattern);
+      this.population = this.blinkerPattern.size;
+    }
+
+    else if(this.inbuiltPattern == "Glider"){
+      this.godService.cellsAlive.clear();
+      this.godService.setCellsStatus(this.gliderPattern);
+      this.population = this.gliderPattern.size;
+
+    }
+
+    else if(this.inbuiltPattern == "Pulsar"){
+      this.godService.cellsAlive.clear();
+      this.godService.setCellsStatus(this.pulsarPattern);
+      this.population = this.pulsarPattern.size;
+
+    }
+
+    else if(this.inbuiltPattern == "Penta"){
+      this.godService.cellsAlive.clear();
+      this.godService.setCellsStatus(this.pentaPattern);
+      this.population = this.pentaPattern.size;
+
+    }
   }
 
 }
